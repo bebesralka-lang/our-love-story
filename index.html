@@ -23,7 +23,7 @@
             position: relative;
         }
 
-        /* ===== ФОНАРИКИ (только вверх, без вращения) ===== */
+        /* ===== ФОНАРИКИ ===== */
         .lanterns {
             position: fixed;
             top: 0;
@@ -70,12 +70,70 @@
             100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
-        .container {
+        /* ===== КОНТЕЙНЕР С ЛОЗОЙ ===== */
+        .container-wrapper {
             position: relative;
             z-index: 1;
-            max-width: 700px;
+            max-width: 740px;
             width: 100%;
+            padding: 18px;
+            border-radius: 70px 70px 50px 50px;
+            /* Виноградная лоза (рамка) */
+            background: repeating-linear-gradient(45deg, 
+                #2d5a1e 0px, #2d5a1e 3px, 
+                #3a7a2a 3px, #3a7a2a 6px, 
+                #4caf50 6px, #4caf50 9px, 
+                #3a7a2a 9px, #3a7a2a 12px, 
+                #2d5a1e 12px, #2d5a1e 15px
+            );
+            box-shadow: 0 0 40px rgba(45, 90, 30, 0.4);
+        }
+
+        /* Листочки лозы (по углам) */
+        .container-wrapper::before,
+        .container-wrapper::after {
+            content: '🌿';
+            position: absolute;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.5));
+            pointer-events: none;
+        }
+        .container-wrapper::before {
+            top: -10px;
+            left: -5px;
+            transform: rotate(-20deg);
+        }
+        .container-wrapper::after {
+            bottom: -10px;
+            right: -5px;
+            transform: rotate(160deg);
+        }
+
+        /* Дополнительные листочки по бокам */
+        .leaf-top-right {
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            font-size: 2rem;
+            transform: rotate(60deg);
+            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.4));
+            pointer-events: none;
+            z-index: 2;
+        }
+        .leaf-bottom-left {
+            position: absolute;
+            bottom: -10px;
+            left: -5px;
+            font-size: 2rem;
+            transform: rotate(-140deg);
+            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.4));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* ОСНОВНОЙ КОНТЕЙНЕР (внутренний) */
+        .container {
+            position: relative;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
             border-radius: 60px 60px 40px 40px;
@@ -83,9 +141,10 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             text-align: center;
+            z-index: 1;
         }
 
-        /* ===== ЗАГОЛОВОК ===== */
+        /* ===== ОСТАЛЬНЫЕ СТИЛИ (без изменений) ===== */
         .date-badge {
             background: linear-gradient(135deg, #f8bbd0, #f48fb1);
             padding: 12px 25px;
@@ -120,7 +179,6 @@
             opacity: 0.9;
         }
 
-        /* ===== СЧЁТЧИК ДНЕЙ И ТАЙМЕР ===== */
         .counter-box {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 30px;
@@ -143,7 +201,6 @@
             opacity: 0.85;
         }
 
-        /* ===== КАЛЕНДАРЬ ===== */
         .calendar-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -157,9 +214,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(4px);
         }
-        .calendar-item .emoji {
-            font-size: 2rem;
-        }
+        .calendar-item .emoji { font-size: 2rem; }
         .calendar-item .date {
             font-size: 1.1rem;
             font-weight: bold;
@@ -173,7 +228,6 @@
             opacity: 0.85;
         }
 
-        /* ===== ПОЛЯРОИД-БИЛЕТ ===== */
         .polaroid-ticket {
             background: #fef9e6;
             padding: 16px 16px 35px 16px;
@@ -206,7 +260,6 @@
             font-style: italic;
         }
 
-        /* ===== КНОПКА-КОНВЕРТ ===== */
         .letter-btn {
             background: linear-gradient(135deg, #f8bbd0, #f48fb1);
             border: none;
@@ -250,7 +303,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== МУЗЫКА ===== */
         .music-box {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 50px;
@@ -287,7 +339,6 @@
             opacity: 0.9;
         }
 
-        /* ===== ОКОШКО С ТЕКСТОМ ПЕСНИ ===== */
         .lyrics-box {
             display: none;
             background: rgba(255, 255, 255, 0.15);
@@ -301,9 +352,7 @@
             text-align: left;
             animation: fadeIn 0.6s ease;
         }
-        .lyrics-box.show {
-            display: block;
-        }
+        .lyrics-box.show { display: block; }
         .lyrics-scroll p {
             color: #fff;
             font-family: 'Georgia', serif;
@@ -313,21 +362,10 @@
             padding: 2px 0;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
         }
-        .lyrics-scroll p:last-child {
-            border-bottom: none;
-        }
-
-        .lyrics-box::-webkit-scrollbar {
-            width: 4px;
-        }
-        .lyrics-box::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-        .lyrics-box::-webkit-scrollbar-thumb {
-            background: #f5c542;
-            border-radius: 10px;
-        }
+        .lyrics-scroll p:last-child { border-bottom: none; }
+        .lyrics-box::-webkit-scrollbar { width: 4px; }
+        .lyrics-box::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+        .lyrics-box::-webkit-scrollbar-thumb { background: #f5c542; border-radius: 10px; }
 
         .footer {
             color: #fff;
@@ -353,6 +391,7 @@
             .polaroid-ticket { width: 170px; }
             .counter-box .number { font-size: 2rem; }
             .calendar-grid { grid-template-columns: 1fr; }
+            .container-wrapper { padding: 12px; }
         }
     </style>
 </head>
@@ -364,85 +403,84 @@
     <!-- ===== ЛЕПЕСТКИ ===== -->
     <div class="petals" id="petals"></div>
 
-    <!-- ===== ОСНОВНОЙ БЛОК ===== -->
-    <div class="container">
+    <!-- ===== КОНТЕЙНЕР С ЛОЗОЙ ===== -->
+    <div class="container-wrapper">
+        <!-- Листочки по углам -->
+        <span class="leaf-top-right">🌿</span>
+        <span class="leaf-bottom-left">🌿</span>
 
-        <div class="date-badge">
-            💕 НАША ИСТОРИЯ ЛЮБВИ
-            <span>16 ОКТЯБРЯ 2023 — НАВСЕГДА</span>
-        </div>
+        <div class="container">
 
-        <h1>💕 Мы — одно целое 💕</h1>
-        <div class="sub">✦ ведь я твой, а ты моя ✦</div>
-
-        <!-- СЧЁТЧИК ДНЕЙ -->
-        <div class="counter-box">
-            <div class="number" id="daysCounter">0</div>
-            <div class="label">дней мы знакомы</div>
-        </div>
-
-        <!-- ТАЙМЕР "СКОЛЬКО МЫ ВМЕСТЕ" -->
-        <div class="counter-box" style="margin-top: -5px;">
-            <div class="number" id="timerCounter">0:0:0:0</div>
-            <div class="label">дней : часов : минут : секунд мы вместе ❤️</div>
-        </div>
-
-        <!-- КАЛЕНДАРЬ -->
-        <div class="calendar-grid">
-            <div class="calendar-item">
-                <div class="emoji">👫</div>
-                <div class="date">8 ИЮНЯ 2025</div>
-                <div class="desc">наша первая встреча (как друзья)</div>
+            <div class="date-badge">
+                💕 НАША ИСТОРИЯ ЛЮБВИ
+                <span>16 ОКТЯБРЯ 2023 — НАВСЕГДА</span>
             </div>
-            <div class="calendar-item">
-                <div class="emoji">💕</div>
-                <div class="date">10 МАЯ 2026</div>
-                <div class="desc">наша первая встреча, мы знали что любим друг друга</div>
+
+            <h1>💕 Мы — одно целое 💕</h1>
+            <div class="sub">✦ ведь я твой, а ты моя ✦</div>
+
+            <div class="counter-box">
+                <div class="number" id="daysCounter">0</div>
+                <div class="label">дней мы знакомы</div>
             </div>
-        </div>
 
-        <!-- ПОЛЯРОИД-БИЛЕТ -->
-        <div class="polaroid-ticket">
-            <img src="photo1.jpg" alt="Наша встреча">
-            <div class="caption">🎟️ 16 октября 2023, 23:21 — наш первый разговор</div>
-        </div>
-
-        <!-- КОНВЕРТ -->
-        <button class="letter-btn" id="letterBtn">💌 Наше письмо</button>
-        <div class="letter-text" id="letterText">
-            💕 Здесь будут твои слова, скрины и вся наша история…<br><br>
-            ❤️ Ты — моё всё.
-        </div>
-
-        <!-- МУЗЫКА + ТЕКСТ ПЕСНИ -->
-        <div class="music-box">
-            <span class="label">🎵</span>
-            <button id="playMusicBtn">🎧 Включить музыку</button>
-            <span class="label">Одним целым (One Whole) — Shyney</span>
-        </div>
-
-        <!-- ОКОШКО С ТЕКСТОМ ПЕСНИ -->
-        <div class="lyrics-box" id="lyricsBox">
-            <div class="lyrics-scroll">
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
-                <p>Мы сумели в самом деле</p>
-                <p>Ведь я твой, а ты моя</p>
+            <div class="counter-box" style="margin-top: -5px;">
+                <div class="number" id="timerCounter">0:0:0:0</div>
+                <div class="label">дней : часов : минут : секунд мы вместе ❤️</div>
             </div>
-        </div>
 
-        <div class="footer">
-            <span class="heart-big">💕</span> наша история — только начало <span class="heart-big">💕</span>
-        </div>
+            <div class="calendar-grid">
+                <div class="calendar-item">
+                    <div class="emoji">👫</div>
+                    <div class="date">8 ИЮНЯ 2025</div>
+                    <div class="desc">наша первая встреча (как друзья)</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="emoji">💕</div>
+                    <div class="date">10 МАЯ 2026</div>
+                    <div class="desc">наша первая встреча, мы знали что любим друг друга</div>
+                </div>
+            </div>
 
+            <div class="polaroid-ticket">
+                <img src="photo1.jpg" alt="Наша встреча">
+                <div class="caption">🎟️ 16 октября 2023, 23:21 — наш первый разговор</div>
+            </div>
+
+            <button class="letter-btn" id="letterBtn">💌 Наше письмо</button>
+            <div class="letter-text" id="letterText">
+                💕 Здесь будут твои слова, скрины и вся наша история…<br><br>
+                ❤️ Ты — моё всё.
+            </div>
+
+            <div class="music-box">
+                <span class="label">🎵</span>
+                <button id="playMusicBtn">🎧 Включить музыку</button>
+                <span class="label">Одним целым (One Whole) — Shyney</span>
+            </div>
+
+            <div class="lyrics-box" id="lyricsBox">
+                <div class="lyrics-scroll">
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                    <p>Мы сумели в самом деле</p>
+                    <p>Ведь я твой, а ты моя</p>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span class="heart-big">💕</span> наша история — только начало <span class="heart-big">💕</span>
+            </div>
+
+        </div>
     </div>
 
     <script>
@@ -531,7 +569,7 @@
                 '💌 Наше письмо';
         });
 
-        // ======= МУЗЫКА (Shyney.mp3) =======
+        // ======= МУЗЫКА =======
         const playBtn = document.getElementById('playMusicBtn');
         const lyricsBox = document.getElementById('lyricsBox');
         let audio = null;
