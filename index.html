@@ -446,9 +446,9 @@
     </div>
 
     <script>
-        // ======= ФОНАРИКИ (только вверх, без вращения, много) ======
+        // ======= ФОНАРИКИ ======
         const lanternsContainer = document.getElementById('lanterns');
-        const lanternEmojis = ['🏮', '🏮', '🏮', '🏮'];
+        const lanternEmojis = ['🏮', '✨', '🌟', '🪔'];
 
         function createLantern() {
             const lantern = document.createElement('div');
@@ -462,11 +462,14 @@
             setTimeout(() => lantern.remove(), 12000);
         }
 
-        // много фонариков сразу
         for (let i = 0; i < 30; i++) {
             setTimeout(createLantern, i * 150);
         }
         setInterval(createLantern, 800);
+
+        // ======= ЛЕПЕСТКИ =======
+        const petalsContainer = document.getElementById('petals');
+        const flowers = ['🌸', '🌺', '🌷', '🌹', '💮', '🌼', '🌸'];
 
         function createPetal() {
             const petal = document.createElement('div');
@@ -495,7 +498,7 @@
         updateDays();
         setInterval(updateDays, 86400000);
 
-        // ======= ТАЙМЕР "МЫ ВМЕСТЕ" =======
+        // ======= ТАЙМЕР =======
         function updateTimer() {
             const startDate = new Date('2026-05-10T00:00:00+03:00');
             const now = new Date();
@@ -528,7 +531,7 @@
                 '💌 Наше письмо';
         });
 
-        // ======= МУЗЫКА + ТЕКСТ ПЕСНИ =======
+        // ======= МУЗЫКА (Shyney.mp3) =======
         const playBtn = document.getElementById('playMusicBtn');
         const lyricsBox = document.getElementById('lyricsBox');
         let audio = null;
@@ -536,7 +539,8 @@
 
         playBtn.addEventListener('click', function() {
             if (!audio) {
-                audio = new Audio('music.mp3');
+                audio = new Audio();
+                audio.src = 'Shyney.mp3';
                 audio.loop = true;
                 audio.volume = 0.5;
             }
@@ -554,7 +558,7 @@
                         lyricsBox.classList.add('show');
                     })
                     .catch(() => {
-                        alert('⚠️ Загрузи music.mp3 в репозиторий!');
+                        alert('⚠️ Загрузи Shyney.mp3 в репозиторий!');
                     });
             }
         });
