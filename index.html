@@ -1,1 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>💕 Наша история любви</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b0a1a 0%, #1a1040 40%, #2d1b69 100%);
+            font-family: 'Georgia', 'Segoe UI', cursive;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ФОНАРИКИ ИЗ РАПУНЦЕЛЬ ===== */
+        .lanterns {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .lantern {
+            position: absolute;
+            font-size: 30px;
+            animation: floatUp linear forwards;
+            user-select: none;
+            opacity: 0.7;
+            text-shadow: 0 0 30px rgba(255, 200, 50, 0.6);
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0.9; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* ===== ЛЕПЕСТКИ ===== */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .petal {
+            position: absolute;
+            font-size: 22px;
+            animation: fall linear forwards;
+            opacity: 0.6;
+            user-select: none;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            border-radius: 60px 60px 40px 40px;
+            padding: 35px 25px 45px;
+            border: 2px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        /* ===== ЗАГОЛОВОК ===== */
+        .date-badge {
+            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(244, 143, 177, 0.3);
+        }
+        .date-badge span {
+            font-size: 1.6rem;
+            display: block;
+            margin-top: 3px;
+            font-family: 'Georgia', serif;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            color: #ffe9a7;
+            text-shadow: 0 0 30px #ffb347;
+            margin: 5px 0 5px;
+            font-family: 'Georgia', serif;
+        }
+        .sub {
+            color: #d9c8ff;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* ===== СЧЁТЧИК ДНЕЙ И ТАЙМЕР ===== */
+        .counter-box {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 18px 20px;
+            margin: 10px 0 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(4px);
+        }
+        .counter-box .number {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #ffe9a7;
+            font-family: 'Georgia', serif;
+            text-shadow: 0 0 20px #ffb347;
+        }
+        .counter-box .label {
+            font-size: 1rem;
+            color: #d9c8ff;
+            margin-top: 2px;
+        }
+
+        /* ===== КАЛЕНДАРЬ ===== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+        .calendar-item {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 18px 12px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(4px);
+        }
+        .calendar-item .emoji {
+            font-size: 2rem;
+        }
+        .calendar-item .date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffe9a7;
+            margin-top: 4px;
+        }
+        .calendar-item .desc {
+            font-size: 0.85rem;
+            color: #d9c8ff;
+            margin-top: 2px;
+        }
+
+        /* ===== ПОЛЯРОИД-БИЛЕТ ===== */
+        .polaroid-ticket {
+            background: #fef9e6;
+            padding: 16px 16px 35px 16px;
+            border-radius: 20px 20px 30px 30px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 0 2px #fff9e6, 0 0 0 5px rgba(255, 215, 0, 0.1);
+            width: 240px;
+            margin: 10px auto 20px;
+            transform: rotate(-1deg);
+            transition: 0.3s;
+        }
+        .polaroid-ticket:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        .polaroid-ticket img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+            border: 2px solid #e6dcc4;
+            filter: brightness(1.02) contrast(1.02);
+        }
+        .polaroid-ticket .caption {
+            font-family: 'Georgia', cursive;
+            font-size: 0.9rem;
+            color: #3d2a1a;
+            margin-top: 12px;
+            text-align: center;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        /* ===== КНОПКА-КОНВЕРТ ===== */
+        .letter-btn {
+            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 25px rgba(244, 143, 177, 0.2);
+            font-family: 'Georgia', serif;
+            margin: 8px 0 12px;
+            letter-spacing: 1px;
+        }
+        .letter-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #f48fb1, #ec407a);
+        }
+
+        .letter-text {
+            display: none;
+            background: rgba(255, 248, 240, 0.95);
+            border-radius: 24px;
+            padding: 25px;
+            margin: 10px 0 15px;
+            border: 2px solid #f8bbd0;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            color: #4a2a3a;
+            line-height: 1.8;
+            text-align: left;
+            box-shadow: 0 8px 30px rgba(244, 143, 177, 0.1);
+        }
+        .letter-text.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== МУЗЫКА ===== */
+        .music-box {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50px;
+            padding: 12px 20px;
+            margin: 8px 0 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .music-box button {
+            background: #f5c542;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: #1a0f2e;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(245, 197, 66, 0.2);
+            font-family: inherit;
+        }
+        .music-box button:hover {
+            transform: scale(1.05);
+            background: #ffd966;
+        }
+        .music-box .label {
+            color: #d9c8ff;
+            font-size: 0.85rem;
+        }
+
+        /* ===== ОКОШКО С ТЕКСТОМ ПЕСНИ ===== */
+        .lyrics-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 18px 22px;
+            margin: 12px 0 15px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            max-height: 180px;
+            overflow-y: auto;
+            text-align: left;
+            animation: fadeIn 0.6s ease;
+        }
+        .lyrics-box.show {
+            display: block;
+        }
+        .lyrics-scroll p {
+            color: #e0d4ff;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            margin: 0;
+            padding: 2px 0;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.05);
+        }
+        .lyrics-scroll p:last-child {
+            border-bottom: none;
+        }
+
+        .lyrics-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .lyrics-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .lyrics-box::-webkit-scrollbar-thumb {
+            background: #f5c542;
+            border-radius: 10px;
+        }
+
+        .footer {
+            color: #9a7a8a;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            border-top: 1px dashed rgba(255, 215, 0, 0.15);
+            padding-top: 20px;
+        }
+        .footer .heart-big {
+            font-size: 1.8rem;
+            display: inline-block;
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .polaroid-ticket { width: 170px; }
+            .counter-box .number { font-size: 2rem; }
+            .calendar-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ФОНАРИКИ ===== -->
+    <div class="lanterns" id="lanterns"></div>
+
+    <!-- ===== ЛЕПЕСТКИ ===== -->
+    <div class="petals" id="petals"></div>
+
+    <!-- ===== ОСНОВНОЙ БЛОК ===== -->
+    <div class="container">
+
+        <div class="date-badge">
+            💕 НАША ИСТОРИЯ ЛЮБВИ
+            <span>16 ОКТЯБРЯ 2023 — НАВСЕГДА</span>
+        </div>
+
+        <h1>💕 Мы — одно целое 💕</h1>
+        <div class="sub">✦ ведь я твой, а ты моя ✦</div>
+
+        <!-- СЧЁТЧИК ДНЕЙ -->
+        <div class="counter-box">
+            <div class="number" id="daysCounter">0</div>
+            <div class="label">дней мы знакомы</div>
+        </div>
+
+        <!-- ТАЙМЕР "СКОЛЬКО МЫ ВМЕСТЕ" -->
+        <div class="counter-box" style="margin-top: -5px;">
+            <div class="number" id="timerCounter">0:0:0:0</div>
+            <div class="label">дней : часов : минут : секунд мы вместе ❤️</div>
+        </div>
+
+        <!-- КАЛЕНДАРЬ -->
+        <div class="calendar-grid">
+            <div class="calendar-item">
+                <div class="emoji">👫</div>
+                <div class="date">8 ИЮНЯ 2025</div>
+                <div class="desc">наша первая встреча (как друзья)</div>
+            </div>
+            <div class="calendar-item">
+                <div class="emoji">💕</div>
+                <div class="date">10 МАЯ 2026</div>
+                <div class="desc">мы поняли, что любим друг друга</div>
+            </div>
+        </div>
+
+        <!-- ПОЛЯРОИД-БИЛЕТ -->
+        <div class="polaroid-ticket">
+            <img src="photo1.jpg" alt="Наша встреча">
+            <div class="caption">🎟️ 16 октября 2023, 23:21 — наш первый разговор</div>
+        </div>
+
+        <!-- КОНВЕРТ -->
+        <button class="letter-btn" id="letterBtn">💌 Наше письмо</button>
+        <div class="letter-text" id="letterText">
+            💕 Здесь будут твои слова, скрины и вся наша история…<br><br>
+            ❤️ Ты — моё всё.
+        </div>
+
+        <!-- МУЗЫКА + ТЕКСТ ПЕСНИ -->
+        <div class="music-box">
+            <span class="label">🎵</span>
+            <button id="playMusicBtn">🎧 Включить музыку</button>
+            <span class="label">Одним целым (One Whole) — Shyney</span>
+        </div>
+
+        <!-- ОКОШКО С ТЕКСТОМ ПЕСНИ -->
+        <div class="lyrics-box" id="lyricsBox">
+            <div class="lyrics-scroll">
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+                <p>Мы сумели в самом деле</p>
+                <p>Ведь я твой, а ты моя</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="heart-big">💕</span> наша история — только начало <span class="heart-big">💕</span>
+        </div>
+
+    </div>
+
+    <script>
+        // ======= ФОНАРИКИ =======
+        const lanternsContainer = document.getElementById('lanterns');
+        const lanternEmojis = ['🏮', '✨', '🌟', '🪔'];
+
+        function createLantern() {
+            const lantern = document.createElement('div');
+            lantern.className = 'lantern';
+            lantern.textContent = lanternEmojis[Math.floor(Math.random() * lanternEmojis.length)];
+            lantern.style.left = Math.random() * 100 + '%';
+            lantern.style.fontSize = (Math.random() * 25 + 22) + 'px';
+            lantern.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            lantern.style.animationDelay = (Math.random() * 3) + 's';
+            lanternsContainer.appendChild(lantern);
+            setTimeout(() => lantern.remove(), 12000);
+        }
+
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createLantern, i * 300);
+        }
+        setInterval(createLantern, 2000);
+
+        // ======= ЛЕПЕСТКИ =======
+        const petalsContainer = document.getElementById('petals');
+        const flowers = ['🌸', '🌺', '🌷', '🌹', '💮', '🌼', '🌸'];
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.fontSize = (Math.random() * 20 + 16) + 'px';
+            petal.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            petal.style.animationDelay = (Math.random() * 2) + 's';
+            petalsContainer.appendChild(petal);
+            setTimeout(() => petal.remove(), 7000);
+        }
+
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createPetal, i * 150);
+        }
+        setInterval(createPetal, 1500);
+
+        // ======= СЧЁТЧИК ДНЕЙ =======
+        function updateDays() {
+            const startDate = new Date('2023-10-16T23:21:00+03:00');
+            const now = new Date();
+            const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysCounter').textContent = diff >= 0 ? diff : 0;
+        }
+        updateDays();
+        setInterval(updateDays, 86400000);
+
+        // ======= ТАЙМЕР "МЫ ВМЕСТЕ" =======
+        function updateTimer() {
+            const startDate = new Date('2026-05-10T00:00:00+03:00');
+            const now = new Date();
+            let diff = Math.floor((now - startDate) / 1000);
+            if (diff < 0) diff = 0;
+
+            const days = Math.floor(diff / 86400);
+            diff -= days * 86400;
+            const hours = Math.floor(diff / 3600);
+            diff -= hours * 3600;
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+
+            document.getElementById('timerCounter').textContent =
+                days + ':' + String(hours).padStart(2, '0') + ':' +
+                String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // ======= КОНВЕРТ =======
+        const letterBtn = document.getElementById('letterBtn');
+        const letterText = document.getElementById('letterText');
+
+        letterBtn.addEventListener('click', function() {
+            letterText.classList.toggle('show');
+            letterBtn.textContent = letterText.classList.contains('show') ?
+                '💌 Закрыть письмо' :
+                '💌 Наше письмо';
+        });
+
+        // ======= МУЗЫКА + ТЕКСТ ПЕСНИ =======
+        const playBtn = document.getElementById('playMusicBtn');
+        const lyricsBox = document.getElementById('lyricsBox');
+        let audio = null;
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', function() {
+            if (!audio) {
+                audio = new Audio('music.mp3');
+                audio.loop = true;
+                audio.volume = 0.5;
+            }
+
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playBtn.textContent = '🎧 Включить музыку';
+                lyricsBox.classList.remove('show');
+            } else {
+                audio.play()
+                    .then(() => {
+                        isPlaying = true;
+                        playBtn.textContent = '⏸️ Пауза';
+                        lyricsBox.classList.add('show');
+                    })
+                    .catch(() => {
+                        alert('⚠️ Загрузи music.mp3 в репозиторий!');
+                    });
+            }
+        });
+    </script>
+
+</body>
+</html>
