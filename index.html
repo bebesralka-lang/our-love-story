@@ -23,7 +23,7 @@
             position: relative;
         }
 
-        /* ===== СТИКЕРЫ (летят вверх и крутятся) ===== */
+        /* ===== СТИКЕРЫ ЛЕТЯТ ВВЕРХ ===== */
         .floaters-up {
             position: fixed;
             top: 0;
@@ -47,7 +47,7 @@
             100% { transform: translateY(-10vh) rotate(720deg) scale(1.3); opacity: 0; }
         }
 
-        /* ===== СТИКЕРЫ (падают вниз и крутятся) ===== */
+        /* ===== СТИКЕРЫ ПАДАЮТ ВНИЗ ===== */
         .floaters-down {
             position: fixed;
             top: 0;
@@ -74,7 +74,7 @@
         .container-wrapper {
             position: relative;
             z-index: 1;
-            max-width: 740px;
+            max-width: 780px;
             width: 100%;
             padding: 18px;
             border-radius: 70px 70px 50px 50px;
@@ -308,11 +308,19 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== МУЗЫКА + ФОТО + ТЕКСТ ===== */
+        .music-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0 15px;
+        }
+
         .music-box {
             background: rgba(44, 58, 66, 0.3);
             border-radius: 50px;
             padding: 12px 20px;
-            margin: 8px 0 10px;
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -345,30 +353,82 @@
             opacity: 0.8;
         }
 
+        /* ===== БЛОК: ФОТО АЛЬБОМА + ТЕКСТ ===== */
+        .lyrics-album-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: stretch;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .album-photo {
+            flex: 0 0 130px;
+            min-height: 160px;
+            background: rgba(44, 58, 66, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(179, 190, 192, 0.08);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .album-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .album-photo .placeholder {
+            color: #5c6b74;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.5;
+            padding: 10px;
+        }
+
         .lyrics-box {
-            display: none;
+            flex: 1;
             background: rgba(26, 37, 41, 0.6);
             backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 18px 22px;
-            margin: 12px 0 15px;
             border: 1px solid rgba(179, 190, 192, 0.06);
-            max-height: 180px;
-            overflow-y: auto;
+            min-height: 160px;
+            max-height: 260px;
+            overflow: hidden;
             text-align: left;
-            animation: fadeIn 0.6s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
-        .lyrics-box.show { display: block; }
-        .lyrics-scroll p {
+
+        .lyrics-slide {
+            width: 100%;
+            text-align: center;
+            animation: fadeSlide 0.8s ease;
+        }
+        .lyrics-slide p {
             color: #b3bec0;
             font-family: 'Georgia', serif;
-            font-size: 1rem;
-            line-height: 1.9;
+            font-size: 1.1rem;
+            line-height: 1.8;
             margin: 0;
-            padding: 2px 0;
-            border-bottom: 1px dashed rgba(179, 190, 192, 0.04);
+            padding: 6px 0;
         }
-        .lyrics-scroll p:last-child { border-bottom: none; }
+        .lyrics-slide .highlight {
+            color: #e8edee;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .lyrics-box::-webkit-scrollbar { width: 4px; }
         .lyrics-box::-webkit-scrollbar-track { background: rgba(44, 58, 66, 0.2); border-radius: 10px; }
         .lyrics-box::-webkit-scrollbar-thumb { background: #5c6b74; border-radius: 10px; }
@@ -392,7 +452,16 @@
             100% { transform: scale(1); }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
+            .lyrics-album-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .album-photo {
+                flex: 0 0 auto;
+                width: 120px;
+                height: 120px;
+            }
             h1 { font-size: 2rem; }
             .polaroid-ticket { width: 170px; }
             .counter-box .number { font-size: 2rem; }
@@ -403,13 +472,11 @@
 </head>
 <body>
 
-    <!-- ===== СТИКЕРЫ ЛЕТЯТ ВВЕРХ ===== -->
+    <!-- ===== СТИКЕРЫ ===== -->
     <div class="floaters-up" id="floatersUp"></div>
-
-    <!-- ===== СТИКЕРЫ ПАДАЮТ ВНИЗ ===== -->
     <div class="floaters-down" id="floatersDown"></div>
 
-    <!-- ===== КОНТЕЙНЕР С ЛОЗОЙ ===== -->
+    <!-- ===== КОНТЕЙНЕР ===== -->
     <div class="container-wrapper">
         <span class="leaf-top-right">🌿</span>
         <span class="leaf-bottom-left">🌿</span>
@@ -458,27 +525,30 @@
                 ❤️ Ты — моё всё.
             </div>
 
-            <div class="music-box">
-                <span class="label">🎵</span>
-                <button id="playMusicBtn">🎧 Включить музыку</button>
-                <span class="label">Одним целым (One Whole) — Shyney</span>
-            </div>
+            <!-- ===== МУЗЫКА + ФОТО + ТЕКСТ ===== -->
+            <div class="music-section">
 
-            <div class="lyrics-box" id="lyricsBox">
-                <div class="lyrics-scroll">
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
-                    <p>Мы сумели в самом деле</p>
-                    <p>Ведь я твой, а ты моя</p>
+                <div class="music-box">
+                    <span class="label">🎵</span>
+                    <button id="playMusicBtn">🎧 Включить музыку</button>
+                    <span class="label">Одним целым (One Whole) — Shyney</span>
                 </div>
+
+                <div class="lyrics-album-wrapper">
+                    <!-- Фото альбома -->
+                    <div class="album-photo" id="albumPhoto">
+                        <img src="album.jpg" alt="Обложка альбома" id="albumImg" style="display:none;">
+                        <span class="placeholder" id="albumPlaceholder">📷 фото альбома</span>
+                    </div>
+
+                    <!-- Текст песни (слайд-шоу) -->
+                    <div class="lyrics-box" id="lyricsBox">
+                        <div class="lyrics-slide" id="lyricsSlide">
+                            <p class="highlight">🎵 Нажми «Включить музыку»</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="footer">
@@ -489,14 +559,14 @@
     </div>
 
     <script>
-        // ======= СТИКЕРЫ ЛЕТЯТ ВВЕРХ И КРУТЯТСЯ ======
+        // ======= СТИКЕРЫ ВВЕРХ ======
         const floatersUp = document.getElementById('floatersUp');
-        const stickersUp = ['🤍', '⚪', '◻️', '▫️', '⬜'];
+        const stickers = ['🤍', '⚪', '◻️', '▫️', '⬜'];
 
         function createFloaterUp() {
             const el = document.createElement('div');
             el.className = 'floater-up';
-            el.textContent = stickersUp[Math.floor(Math.random() * stickersUp.length)];
+            el.textContent = stickers[Math.floor(Math.random() * stickers.length)];
             el.style.left = Math.random() * 100 + '%';
             el.style.fontSize = (Math.random() * 20 + 18) + 'px';
             el.style.animationDuration = (Math.random() * 10 + 8) + 's';
@@ -510,14 +580,13 @@
         }
         setInterval(createFloaterUp, 800);
 
-        // ======= СТИКЕРЫ ПАДАЮТ ВНИЗ И КРУТЯТСЯ ======
+        // ======= СТИКЕРЫ ВНИЗ ======
         const floatersDown = document.getElementById('floatersDown');
-        const stickersDown = ['🤍', '⚪', '◻️', '▫️', '⬜'];
 
         function createFloaterDown() {
             const el = document.createElement('div');
             el.className = 'floater-down';
-            el.textContent = stickersDown[Math.floor(Math.random() * stickersDown.length)];
+            el.textContent = stickers[Math.floor(Math.random() * stickers.length)];
             el.style.left = Math.random() * 100 + '%';
             el.style.fontSize = (Math.random() * 18 + 14) + 'px';
             el.style.animationDuration = (Math.random() * 4 + 4) + 's';
@@ -541,9 +610,9 @@
         updateDays();
         setInterval(updateDays, 86400000);
 
-        // ======= ТАЙМЕР =======
+        // ======= ТАЙМЕР (С 14 ИЮНЯ 2026) =======
         function updateTimer() {
-            const startDate = new Date('2026-05-10T00:00:00+03:00');
+            const startDate = new Date('2026-06-14T00:00:00+03:00');
             const now = new Date();
             let diff = Math.floor((now - startDate) / 1000);
             if (diff < 0) diff = 0;
@@ -574,12 +643,85 @@
                 '💌 Наше письмо';
         });
 
-        // ======= МУЗЫКА =======
+        // ======= МУЗЫКА + СЛАЙД-ШОУ ТЕКСТА =======
         const playBtn = document.getElementById('playMusicBtn');
-        const lyricsBox = document.getElementById('lyricsBox');
+        const lyricsSlide = document.getElementById('lyricsSlide');
+        const albumImg = document.getElementById('albumImg');
+        const albumPlaceholder = document.getElementById('albumPlaceholder');
+
         let audio = null;
         let isPlaying = false;
+        let slideInterval = null;
+        let currentSlide = 0;
 
+        // Полный текст песни (разбит на слайды)
+        const lyricsLines = [
+            '🎵 Будь одним целым, будь одним целым<br>Будь одним целым, для меня',
+            'Будь одним целым, будь одним целым<br>Будь одним целым',
+            'Будь одним целым для меня<br>Движения телом об меня<br>Мы в отеле, неужели?',
+            'Лью Mondoro на Goyard<br>Он тебя кинет, но не я<br>Ну же, прыгай на меня',
+            '⭐ Мы сумели в самом деле<br>Ведь я твой, а ты моя ⭐',
+            'Я твой артист<br>Благодаря тебе чист<br>Бери худи от Alyx',
+            'Зайка, мне похуй на числа<br>Твоя прядь на мои джинсы<br>Скучаю по тебе в провинции',
+            'Я сейчас в туре, напиши мне<br>Видишь меня на афише',
+            'Лишь там ты меня увидишь, и поймёшь, что Шайни — это я<br>Мало песен про любовь, но знай, что они про тебя',
+            'Дьявол может плакать, но ты ангел — потушила пожар<br>Пусть пиздят про нас — мне похуй, будь целым',
+            '🎵 Будь одним целым для меня<br>Движения телом об меня<br>Мы в отеле, неужели?',
+            'Лью Mondoro на Goyard<br>Он тебя кинет, но не я<br>Ну же, прыгай на меня',
+            '⭐ Мы сумели в самом деле<br>Ведь я твой, а ты моя ⭐'
+        ];
+
+        function showSlide(index) {
+            if (index >= lyricsLines.length) {
+                currentSlide = 0;
+                index = 0;
+            }
+            const line = lyricsLines[index];
+            // проверяем, содержит ли строка звезду — это припев
+            const isHighlight = line.includes('⭐');
+            const highlightClass = isHighlight ? 'highlight' : '';
+            lyricsSlide.innerHTML = `<p class="${highlightClass}">${line}</p>`;
+        }
+
+        function startSlideshow() {
+            if (slideInterval) return;
+            currentSlide = 0;
+            showSlide(0);
+            slideInterval = setInterval(() => {
+                currentSlide++;
+                if (currentSlide >= lyricsLines.length) {
+                    currentSlide = 0;
+                }
+                showSlide(currentSlide);
+            }, 4000);
+        }
+
+        function stopSlideshow() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+            }
+        }
+
+        // Функция для загрузки фото альбома
+        function loadAlbumPhoto() {
+            // Если есть файл album.jpg в репозитории — он отобразится
+            // Если нет — покажется надпись "📷 фото альбома"
+            const img = new Image();
+            img.onload = function() {
+                albumImg.src = 'album.jpg';
+                albumImg.style.display = 'block';
+                albumPlaceholder.style.display = 'none';
+            };
+            img.onerror = function() {
+                albumImg.style.display = 'none';
+                albumPlaceholder.style.display = 'block';
+            };
+            img.src = 'album.jpg';
+        }
+        loadAlbumPhoto();
+
+        // ======= КНОПКА МУЗЫКИ =======
         playBtn.addEventListener('click', function() {
             if (!audio) {
                 audio = new Audio();
@@ -592,13 +734,14 @@
                 audio.pause();
                 isPlaying = false;
                 playBtn.textContent = '🎧 Включить музыку';
-                lyricsBox.classList.remove('show');
+                stopSlideshow();
+                lyricsSlide.innerHTML = `<p class="highlight">🎵 Музыка на паузе</p>`;
             } else {
                 audio.play()
                     .then(() => {
                         isPlaying = true;
                         playBtn.textContent = '⏸️ Пауза';
-                        lyricsBox.classList.add('show');
+                        startSlideshow();
                     })
                     .catch(() => {
                         alert('⚠️ Загрузи Shyney.mp3 в репозиторий!');
