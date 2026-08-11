@@ -448,7 +448,7 @@
     <script>
         // ======= ФОНАРИКИ (только вверх, без вращения, много) ======
         const lanternsContainer = document.getElementById('lanterns');
-        const lanternEmojis = ['🏮', '✨', '🌟', '🪔'];
+        const lanternEmojis = ['🏮', '🏮', '🏮', '🏮'];
 
         function createLantern() {
             const lantern = document.createElement('div');
@@ -467,10 +467,6 @@
             setTimeout(createLantern, i * 150);
         }
         setInterval(createLantern, 800);
-
-        // ======= ЛЕПЕСТКИ =======
-        const petalsContainer = document.getElementById('petals');
-        const flowers = ['🌸', '🌺', '🌷', '🌹', '💮', '🌼', '🌸'];
 
         function createPetal() {
             const petal = document.createElement('div');
