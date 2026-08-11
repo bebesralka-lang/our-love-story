@@ -13,7 +13,7 @@
 
         body {
             min-height: 100vh;
-            background: #ffa1be;
+            background: linear-gradient(145deg, #2b3a42 0%, #1a2529 40%, #0d0b0f 100%);
             font-family: 'Georgia', 'Segoe UI', cursive;
             display: flex;
             flex-direction: column;
@@ -39,11 +39,11 @@
             font-size: 32px;
             animation: floatUp linear forwards;
             user-select: none;
-            opacity: 0.8;
-            text-shadow: 0 0 40px rgba(255, 200, 50, 0.7);
+            opacity: 0.6;
+            text-shadow: 0 0 30px rgba(179, 190, 192, 0.4);
         }
         @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.6); opacity: 0.9; }
+            0% { transform: translateY(110vh) scale(0.6); opacity: 0.7; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
@@ -60,13 +60,13 @@
         }
         .petal {
             position: absolute;
-            font-size: 22px;
+            font-size: 20px;
             animation: fall linear forwards;
-            opacity: 0.6;
+            opacity: 0.4;
             user-select: none;
         }
         @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0.8; }
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0.6; }
             100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
         }
 
@@ -78,25 +78,25 @@
             width: 100%;
             padding: 18px;
             border-radius: 70px 70px 50px 50px;
-            /* Виноградная лоза (рамка) */
+            /* Лоза в цвете #5c6b74 */
             background: repeating-linear-gradient(45deg, 
-                #2d5a1e 0px, #2d5a1e 3px, 
-                #3a7a2a 3px, #3a7a2a 6px, 
-                #4caf50 6px, #4caf50 9px, 
-                #3a7a2a 9px, #3a7a2a 12px, 
-                #2d5a1e 12px, #2d5a1e 15px
+                #5c6b74 0px, #5c6b74 3px, 
+                #748389 3px, #748389 6px, 
+                #8f9ba4 6px, #8f9ba4 9px, 
+                #748389 9px, #748389 12px, 
+                #5c6b74 12px, #5c6b74 15px
             );
-            box-shadow: 0 0 40px rgba(45, 90, 30, 0.4);
+            box-shadow: 0 0 50px rgba(44, 58, 66, 0.6), inset 0 0 30px rgba(0,0,0,0.3);
         }
 
-        /* Листочки лозы (по углам) */
         .container-wrapper::before,
         .container-wrapper::after {
             content: '🌿';
             position: absolute;
             font-size: 2.2rem;
-            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.5));
+            filter: drop-shadow(0 0 8px rgba(92, 107, 116, 0.5));
             pointer-events: none;
+            opacity: 0.7;
         }
         .container-wrapper::before {
             top: -10px;
@@ -109,16 +109,16 @@
             transform: rotate(160deg);
         }
 
-        /* Дополнительные листочки по бокам */
         .leaf-top-right {
             position: absolute;
             top: -10px;
             right: -5px;
             font-size: 2rem;
             transform: rotate(60deg);
-            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.4));
+            filter: drop-shadow(0 0 8px rgba(92, 107, 116, 0.5));
             pointer-events: none;
             z-index: 2;
+            opacity: 0.7;
         }
         .leaf-bottom-left {
             position: absolute;
@@ -126,81 +126,86 @@
             left: -5px;
             font-size: 2rem;
             transform: rotate(-140deg);
-            filter: drop-shadow(0 0 6px rgba(45, 90, 30, 0.4));
+            filter: drop-shadow(0 0 8px rgba(92, 107, 116, 0.5));
             pointer-events: none;
             z-index: 2;
+            opacity: 0.7;
         }
 
-        /* ОСНОВНОЙ КОНТЕЙНЕР (внутренний) */
+        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
         .container {
             position: relative;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
+            background: rgba(13, 11, 15, 0.7);
+            backdrop-filter: blur(10px);
             border-radius: 60px 60px 40px 40px;
             padding: 35px 25px 45px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(179, 190, 192, 0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             text-align: center;
             z-index: 1;
         }
 
-        /* ===== ОСТАЛЬНЫЕ СТИЛИ (без изменений) ===== */
+        /* ===== ЗАГОЛОВОК ===== */
         .date-badge {
-            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            background: linear-gradient(135deg, #748389, #5c6b74);
             padding: 12px 25px;
             border-radius: 50px;
             display: inline-block;
             margin-bottom: 15px;
-            color: #fff;
+            color: #b3bec0;
             font-size: 0.9rem;
             letter-spacing: 2px;
             font-weight: bold;
-            box-shadow: 0 4px 20px rgba(244, 143, 177, 0.3);
+            box-shadow: 0 4px 20px rgba(44, 58, 66, 0.4);
+            border: 1px solid rgba(179, 190, 192, 0.1);
         }
         .date-badge span {
             font-size: 1.6rem;
             display: block;
             margin-top: 3px;
             font-family: 'Georgia', serif;
+            color: #e8edee;
         }
 
         h1 {
             font-size: 2.6rem;
-            color: #fff;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            color: #b3bec0;
+            text-shadow: 0 0 40px rgba(179, 190, 192, 0.15);
             margin: 5px 0 5px;
             font-family: 'Georgia', serif;
         }
         .sub {
-            color: #fff;
+            color: #8f9ba4;
             font-size: 1.2rem;
             font-style: italic;
             margin-bottom: 20px;
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
+        /* ===== СЧЁТЧИКИ ===== */
         .counter-box {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(44, 58, 66, 0.4);
             border-radius: 30px;
             padding: 18px 20px;
             margin: 10px 0 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(179, 190, 192, 0.08);
             backdrop-filter: blur(4px);
         }
         .counter-box .number {
             font-size: 2.8rem;
             font-weight: bold;
-            color: #fff;
+            color: #b3bec0;
             font-family: 'Georgia', serif;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 30px rgba(179, 190, 192, 0.1);
         }
         .counter-box .label {
             font-size: 1rem;
-            color: #fff;
+            color: #8f9ba4;
             margin-top: 2px;
-            opacity: 0.85;
+            opacity: 0.8;
         }
 
+        /* ===== КАЛЕНДАРЬ ===== */
         .calendar-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -208,31 +213,32 @@
             margin: 15px 0 20px;
         }
         .calendar-item {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(44, 58, 66, 0.3);
             border-radius: 24px;
             padding: 18px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(179, 190, 192, 0.06);
             backdrop-filter: blur(4px);
         }
         .calendar-item .emoji { font-size: 2rem; }
         .calendar-item .date {
             font-size: 1.1rem;
             font-weight: bold;
-            color: #fff;
+            color: #b3bec0;
             margin-top: 4px;
         }
         .calendar-item .desc {
             font-size: 0.85rem;
-            color: #fff;
+            color: #8f9ba4;
             margin-top: 2px;
-            opacity: 0.85;
+            opacity: 0.7;
         }
 
+        /* ===== ПОЛЯРОИД ===== */
         .polaroid-ticket {
-            background: #fef9e6;
+            background: #1a2529;
             padding: 16px 16px 35px 16px;
             border-radius: 20px 20px 30px 30px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 0 0 2px #fff9e6, 0 0 0 5px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(179, 190, 192, 0.08);
             width: 240px;
             margin: 10px auto 20px;
             transform: rotate(-1deg);
@@ -240,6 +246,7 @@
         }
         .polaroid-ticket:hover {
             transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 12px 40px rgba(179, 190, 192, 0.05);
         }
         .polaroid-ticket img {
             width: 100%;
@@ -247,52 +254,55 @@
             object-fit: cover;
             border-radius: 14px;
             display: block;
-            border: 2px solid #e6dcc4;
-            filter: brightness(1.02) contrast(1.02);
+            border: 1px solid #2b3a42;
+            filter: brightness(0.9) contrast(1.1) saturate(0.8);
         }
         .polaroid-ticket .caption {
             font-family: 'Georgia', cursive;
             font-size: 0.9rem;
-            color: #3d2a1a;
+            color: #8f9ba4;
             margin-top: 12px;
             text-align: center;
             letter-spacing: 1px;
             font-style: italic;
         }
 
+        /* ===== КОНВЕРТ ===== */
         .letter-btn {
-            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            background: linear-gradient(135deg, #5c6b74, #2b3a42);
             border: none;
             padding: 14px 35px;
             border-radius: 60px;
             font-size: 1rem;
             font-weight: bold;
-            color: #fff;
+            color: #b3bec0;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 6px 25px rgba(244, 143, 177, 0.2);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
             font-family: 'Georgia', serif;
             margin: 8px 0 12px;
             letter-spacing: 1px;
+            border: 1px solid rgba(179, 190, 192, 0.06);
         }
         .letter-btn:hover {
             transform: scale(1.05);
-            background: linear-gradient(135deg, #f48fb1, #ec407a);
+            background: linear-gradient(135deg, #748389, #3a4a52);
+            color: #e8edee;
         }
 
         .letter-text {
             display: none;
-            background: rgba(255, 248, 240, 0.95);
+            background: rgba(26, 37, 41, 0.9);
             border-radius: 24px;
             padding: 25px;
             margin: 10px 0 15px;
-            border: 2px solid #f8bbd0;
+            border: 1px solid rgba(179, 190, 192, 0.06);
             font-family: 'Georgia', serif;
             font-size: 1rem;
-            color: #4a2a3a;
+            color: #b3bec0;
             line-height: 1.8;
             text-align: left;
-            box-shadow: 0 8px 30px rgba(244, 143, 177, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         .letter-text.show {
             display: block;
@@ -303,8 +313,9 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== МУЗЫКА ===== */
         .music-box {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(44, 58, 66, 0.3);
             border-radius: 50px;
             padding: 12px 20px;
             margin: 8px 0 10px;
@@ -312,41 +323,43 @@
             align-items: center;
             gap: 12px;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(179, 190, 192, 0.06);
             flex-wrap: wrap;
             justify-content: center;
         }
         .music-box button {
-            background: #f5c542;
+            background: #5c6b74;
             border: none;
             padding: 10px 25px;
             border-radius: 40px;
             font-weight: bold;
             font-size: 0.95rem;
             cursor: pointer;
-            color: #1a0f2e;
+            color: #0d0b0f;
             transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(245, 197, 66, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             font-family: inherit;
         }
         .music-box button:hover {
             transform: scale(1.05);
-            background: #ffd966;
+            background: #748389;
+            color: #161c1c;
         }
         .music-box .label {
-            color: #fff;
+            color: #8f9ba4;
             font-size: 0.85rem;
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
+        /* ===== ТЕКСТ ПЕСНИ ===== */
         .lyrics-box {
             display: none;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(26, 37, 41, 0.6);
             backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 18px 22px;
             margin: 12px 0 15px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(179, 190, 192, 0.06);
             max-height: 180px;
             overflow-y: auto;
             text-align: left;
@@ -354,26 +367,26 @@
         }
         .lyrics-box.show { display: block; }
         .lyrics-scroll p {
-            color: #fff;
+            color: #b3bec0;
             font-family: 'Georgia', serif;
             font-size: 1rem;
             line-height: 1.9;
             margin: 0;
             padding: 2px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            border-bottom: 1px dashed rgba(179, 190, 192, 0.04);
         }
         .lyrics-scroll p:last-child { border-bottom: none; }
         .lyrics-box::-webkit-scrollbar { width: 4px; }
-        .lyrics-box::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
-        .lyrics-box::-webkit-scrollbar-thumb { background: #f5c542; border-radius: 10px; }
+        .lyrics-box::-webkit-scrollbar-track { background: rgba(44, 58, 66, 0.2); border-radius: 10px; }
+        .lyrics-box::-webkit-scrollbar-thumb { background: #5c6b74; border-radius: 10px; }
 
         .footer {
-            color: #fff;
+            color: #8f9ba4;
             font-size: 0.95rem;
             margin-top: 20px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            border-top: 1px dashed rgba(179, 190, 192, 0.06);
             padding-top: 20px;
-            opacity: 0.8;
+            opacity: 0.6;
         }
         .footer .heart-big {
             font-size: 1.8rem;
@@ -405,7 +418,6 @@
 
     <!-- ===== КОНТЕЙНЕР С ЛОЗОЙ ===== -->
     <div class="container-wrapper">
-        <!-- Листочки по углам -->
         <span class="leaf-top-right">🌿</span>
         <span class="leaf-bottom-left">🌿</span>
 
@@ -514,7 +526,7 @@
             petal.className = 'petal';
             petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
             petal.style.left = Math.random() * 100 + '%';
-            petal.style.fontSize = (Math.random() * 20 + 16) + 'px';
+            petal.style.fontSize = (Math.random() * 18 + 14) + 'px';
             petal.style.animationDuration = (Math.random() * 4 + 4) + 's';
             petal.style.animationDelay = (Math.random() * 2) + 's';
             petalsContainer.appendChild(petal);
