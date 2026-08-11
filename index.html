@@ -23,8 +23,8 @@
             position: relative;
         }
 
-        /* ===== ФОНАРИКИ ===== */
-        .lanterns {
+        /* ===== СТИКЕРЫ (летят вверх и крутятся) ===== */
+        .floaters-up {
             position: fixed;
             top: 0;
             left: 0;
@@ -34,21 +34,21 @@
             z-index: 0;
             overflow: hidden;
         }
-        .lantern {
+        .floater-up {
             position: absolute;
-            font-size: 32px;
-            animation: floatUp linear forwards;
+            font-size: 28px;
+            animation: floatUpRotate linear forwards;
             user-select: none;
             opacity: 0.6;
-            text-shadow: 0 0 30px rgba(179, 190, 192, 0.4);
+            text-shadow: 0 0 20px rgba(179, 190, 192, 0.3);
         }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.6); opacity: 0.7; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        @keyframes floatUpRotate {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.6); opacity: 0.7; }
+            100% { transform: translateY(-10vh) rotate(720deg) scale(1.3); opacity: 0; }
         }
 
-        /* ===== ЛЕПЕСТКИ ===== */
-        .petals {
+        /* ===== СТИКЕРЫ (падают вниз и крутятся) ===== */
+        .floaters-down {
             position: fixed;
             top: 0;
             left: 0;
@@ -58,14 +58,14 @@
             z-index: 0;
             overflow: hidden;
         }
-        .petal {
+        .floater-down {
             position: absolute;
-            font-size: 20px;
-            animation: fall linear forwards;
-            opacity: 0.4;
+            font-size: 22px;
+            animation: fallRotate linear forwards;
             user-select: none;
+            opacity: 0.5;
         }
-        @keyframes fall {
+        @keyframes fallRotate {
             0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0.6; }
             100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
         }
@@ -78,7 +78,6 @@
             width: 100%;
             padding: 18px;
             border-radius: 70px 70px 50px 50px;
-            /* Лоза в цвете #5c6b74 */
             background: repeating-linear-gradient(45deg, 
                 #5c6b74 0px, #5c6b74 3px, 
                 #748389 3px, #748389 6px, 
@@ -182,7 +181,6 @@
             opacity: 0.8;
         }
 
-        /* ===== СЧЁТЧИКИ ===== */
         .counter-box {
             background: rgba(44, 58, 66, 0.4);
             border-radius: 30px;
@@ -205,7 +203,6 @@
             opacity: 0.8;
         }
 
-        /* ===== КАЛЕНДАРЬ ===== */
         .calendar-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -233,7 +230,6 @@
             opacity: 0.7;
         }
 
-        /* ===== ПОЛЯРОИД ===== */
         .polaroid-ticket {
             background: #1a2529;
             padding: 16px 16px 35px 16px;
@@ -267,7 +263,6 @@
             font-style: italic;
         }
 
-        /* ===== КОНВЕРТ ===== */
         .letter-btn {
             background: linear-gradient(135deg, #5c6b74, #2b3a42);
             border: none;
@@ -313,7 +308,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== МУЗЫКА ===== */
         .music-box {
             background: rgba(44, 58, 66, 0.3);
             border-radius: 50px;
@@ -351,7 +345,6 @@
             opacity: 0.8;
         }
 
-        /* ===== ТЕКСТ ПЕСНИ ===== */
         .lyrics-box {
             display: none;
             background: rgba(26, 37, 41, 0.6);
@@ -410,11 +403,11 @@
 </head>
 <body>
 
-    <!-- ===== ФОНАРИКИ ===== -->
-    <div class="lanterns" id="lanterns"></div>
+    <!-- ===== СТИКЕРЫ ЛЕТЯТ ВВЕРХ ===== -->
+    <div class="floaters-up" id="floatersUp"></div>
 
-    <!-- ===== ЛЕПЕСТКИ ===== -->
-    <div class="petals" id="petals"></div>
+    <!-- ===== СТИКЕРЫ ПАДАЮТ ВНИЗ ===== -->
+    <div class="floaters-down" id="floatersDown"></div>
 
     <!-- ===== КОНТЕЙНЕР С ЛОЗОЙ ===== -->
     <div class="container-wrapper">
@@ -428,7 +421,7 @@
                 <span>16 ОКТЯБРЯ 2023 — НАВСЕГДА</span>
             </div>
 
-            <h1>🤍 Мы — одно целое 🤍</h1>
+            <h1>💕 Мы — одно целое 💕</h1>
             <div class="sub">✦ ведь я твой, а ты моя ✦</div>
 
             <div class="counter-box">
@@ -496,47 +489,47 @@
     </div>
 
     <script>
-        // ======= ФОНАРИКИ ======
-        const lanternsContainer = document.getElementById('lanterns');
-        const lanternEmojis = ['🤍', '⚪', '◻️', '▫️' '⬜',];
+        // ======= СТИКЕРЫ ЛЕТЯТ ВВЕРХ И КРУТЯТСЯ ======
+        const floatersUp = document.getElementById('floatersUp');
+        const stickersUp = ['🤍', '⚪', '◻️', '▫️', '⬜'];
 
-        function createLantern() {
-            const lantern = document.createElement('div');
-            lantern.className = 'lantern';
-            lantern.textContent = lanternEmojis[Math.floor(Math.random() * lanternEmojis.length)];
-            lantern.style.left = Math.random() * 100 + '%';
-            lantern.style.fontSize = (Math.random() * 30 + 22) + 'px';
-            lantern.style.animationDuration = (Math.random() * 10 + 8) + 's';
-            lantern.style.animationDelay = (Math.random() * 2) + 's';
-            lanternsContainer.appendChild(lantern);
-            setTimeout(() => lantern.remove(), 12000);
+        function createFloaterUp() {
+            const el = document.createElement('div');
+            el.className = 'floater-up';
+            el.textContent = stickersUp[Math.floor(Math.random() * stickersUp.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.fontSize = (Math.random() * 20 + 18) + 'px';
+            el.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            el.style.animationDelay = (Math.random() * 2) + 's';
+            floatersUp.appendChild(el);
+            setTimeout(() => el.remove(), 12000);
         }
 
         for (let i = 0; i < 30; i++) {
-            setTimeout(createLantern, i * 150);
+            setTimeout(createFloaterUp, i * 150);
         }
-        setInterval(createLantern, 800);
+        setInterval(createFloaterUp, 800);
 
-        // ======= ЛЕПЕСТКИ =======
-        const petalsContainer = document.getElementById('petals');
-        const flowers = ['🤍', '⚪', '◻️', '▫️' '⬜',];
+        // ======= СТИКЕРЫ ПАДАЮТ ВНИЗ И КРУТЯТСЯ ======
+        const floatersDown = document.getElementById('floatersDown');
+        const stickersDown = ['🤍', '⚪', '◻️', '▫️', '⬜'];
 
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-            petal.style.left = Math.random() * 100 + '%';
-            petal.style.fontSize = (Math.random() * 18 + 14) + 'px';
-            petal.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            petal.style.animationDelay = (Math.random() * 2) + 's';
-            petalsContainer.appendChild(petal);
-            setTimeout(() => petal.remove(), 7000);
+        function createFloaterDown() {
+            const el = document.createElement('div');
+            el.className = 'floater-down';
+            el.textContent = stickersDown[Math.floor(Math.random() * stickersDown.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            el.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            el.style.animationDelay = (Math.random() * 2) + 's';
+            floatersDown.appendChild(el);
+            setTimeout(() => el.remove(), 7000);
         }
 
-        for (let i = 0; i < 15; i++) {
-            setTimeout(createPetal, i * 150);
+        for (let i = 0; i < 25; i++) {
+            setTimeout(createFloaterDown, i * 150);
         }
-        setInterval(createPetal, 1500);
+        setInterval(createFloaterDown, 1200);
 
         // ======= СЧЁТЧИК ДНЕЙ =======
         function updateDays() {
