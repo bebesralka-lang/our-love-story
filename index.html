@@ -144,7 +144,7 @@
             z-index: 1;
         }
 
-        /* ===== КРАСИВАЯ ОКОНТОВКА ВНУТРЕННИХ БЛОКОВ ===== */
+        /* ===== КРАСИВАЯ ОКОНТОВКА ===== */
         .bordered-box {
             border: 1px solid rgba(179, 190, 192, 0.12);
             border-radius: 30px;
@@ -546,19 +546,19 @@
                 </div>
             </div>
 
-            <!-- ===== 3 ПОЛЯРОИДА ===== -->
+            <!-- ===== 3 ПОЛЯРОИДА С ВАШИМИ ФАЙЛАМИ ===== -->
             <div class="bordered-box">
                 <div class="polaroid-grid">
                     <div class="polaroid-ticket">
-                        <img src="photo1.jpg" alt="Наша встреча">
+                        <img src="0 (1).jpg" alt="Наша встреча">
                         <div class="caption">🎟️ 16 октября 2023, 23:21 — наш первый разговор</div>
                     </div>
                     <div class="polaroid-ticket">
-                        <img src="photo2.jpg" alt="Наше фото">
+                        <img src="0 (2).jpg" alt="Наше фото">
                         <div class="caption">🤍 наш первый совместный снимок</div>
                     </div>
                     <div class="polaroid-ticket">
-                        <img src="photo3.jpg" alt="Наше фото">
+                        <img src="0 (3).jpg" alt="Наше фото">
                         <div class="caption">💫 момент, когда мы поняли всё</div>
                     </div>
                 </div>
@@ -576,14 +576,14 @@
                 <div class="music-box">
                     <span class="label">🎵</span>
                     <button id="playMusicBtn">🎧 Включить музыку</button>
-                    <span class="label">Одним целым — Shyney</span>
+                    <span class="label">Одним целым (One Whole) — Shyney</span>
                 </div>
 
                 <div class="lyrics-album-wrapper">
                     <!-- Фото альбома -->
                     <div class="album-photo" id="albumPhoto">
-                        <img src="album.jpg" alt="Обложка альбома" id="albumImg" style="display:none;">
-                        <span class="placeholder" id="albumPlaceholder">📷 фото альбома</span>
+                        <img src="0 (4).jpg" alt="Обложка альбома" id="albumImg">
+                        <span class="placeholder" id="albumPlaceholder" style="display:none;">📷 фото альбома</span>
                     </div>
 
                     <!-- Текст песни (слайд-шоу) -->
@@ -685,7 +685,7 @@
             letterText.classList.toggle('show');
             letterBtn.textContent = letterText.classList.contains('show') ?
                 '🤍 Закрыть письмо' :
-                '🤍 письмо';
+                '🤍 Наше письмо';
         });
 
         // ======= МУЗЫКА + СЛАЙД-ШОУ ТЕКСТА =======
@@ -747,20 +747,10 @@
             }
         }
 
-        function loadAlbumPhoto() {
-            const img = new Image();
-            img.onload = function() {
-                albumImg.src = 'album.jpg';
-                albumImg.style.display = 'block';
-                albumPlaceholder.style.display = 'none';
-            };
-            img.onerror = function() {
-                albumImg.style.display = 'none';
-                albumPlaceholder.style.display = 'block';
-            };
-            img.src = 'album.jpg';
-        }
-        loadAlbumPhoto();
+        // Фото альбома уже загружено через img src="0 (4).jpg"
+        // Скрываем плейсхолдер, показываем фото
+        albumImg.style.display = 'block';
+        albumPlaceholder.style.display = 'none';
 
         playBtn.addEventListener('click', function() {
             if (!audio) {
